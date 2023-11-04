@@ -1,0 +1,153 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
+    <div class="w3-row">
+        <div class="w3-col m4">
+            <!-- Profile -->
+            <div class="w3-card w3-round w3-white">
+                <div class="w3-container w3-center">
+                    <p class="w3-center"><img src="{{author.image.url}}" class="w3-circle" style="max-width: 400px; max-height: 550px;  
+                        border-radius: 40px; " alt="Avatar"></p>
+                    <h2 >{{author.name}}</h2>
+                    <hr>
+                    {% if author.intro %}
+                    <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> {{author.intro}}</p>
+                    {% endif %}
+
+                    <p><i class="fa fa-at fa-fw w3-margin-right w3-text-theme"></i> {{author.email}}</p>
+
+                    {% if author.location %}
+                    <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> {{author.location}}</p>
+                    {% endif %}
+
+                    {% if author.mobil %}
+                    <p><i class="fa  fa-mobile  w3-margin-right w3-text-theme"></i> {{author.mobil}}</p>
+                    {% endif %}
+
+                    <p><i class="fa fa-calendar fa-fw w3-margin-right w3-text-theme"></i> Here from {{author.created.date}}</p>
+
+                    {% if author.soc_facebook %}
+                    <a href="{{author.soc_facebook}}"><i class="fa  fa-facebook w3-text-theme w3-xxlarge "></i></a>
+                    {% endif %}
+
+                    {% if author.soc_x %}
+                    <a href="{{author.soc_x}}"><i class="fa  fa-twitter w3-text-theme  w3-xxlarge "></i></a>
+                    {% endif %}
+
+                    {% if author.soc_youtube %}
+                    <a href="{{author.soc_youtube}}"><i class="fa  fa-youtube w3-text-theme  w3-xxlarge ">    </i></a>
+                    {% endif %}
+
+                    {% if author.soc_linkedin %}
+                    <a href="{{author.soc_linkedin}}"><i class="fa  fa-linkedin w3-text-theme w3-xxlarge ">   </i></a>
+                    {% endif %}
+
+                    {% if author.soc_telegram %}
+                    <a href="{{author.soc_telegram}}"><i class="fa  fa-telegram w3-text-theme w3-xxlarge ">   </i></a>
+                    {% endif %}
+
+                </div>
+
+
+                {% if author.id != request.user.author.id %}
+                <div class=" w3-white w3-margin w3-padding w3-center">
+                    <a href="{% url 'create-message' author.id %}" class="w3-button w3-theme w3-margin"><i class="fa fa-envelope"></i> Send Message</a>
+                </div>
+
+                {% endif %}
+            </div>
+            <br>
+
+            <div class="w3-card w3-round w3-white   ">
+                <div class="w3-container ">
+                    <h2>About me</h2>
+                    
+                    <p> {{author.bio}}</p>
+                </div>
+            </div>
+            <br>
+
+            <!-- Interests -->
+            <div class="w3-card w3-round w3-white  ">
+                <div class="w3-container ">
+                    <h2>Interests</h2>
+                    {% for interest in interests %}
+                    <p class=" w3-tag  w3-text-white  w3-theme">{{interest.name}}</p> 
+                    <p> {{interest.description}}</p>
+                    {% endfor %} 
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Middle Column -->
+        <div class="w3-col    w3-round w3-margin m7">
+
+            <h2 class="w3-text-theme w3-center"> {{author.name}} blogs</h2>
+            
+            {% for blog in author.blog_set.all %}
+
+            <div class="w3-container w3-card w3-white w3-round w3-margin-bottom"><br>
+                <div ><br>
+
+                    <span class="w3-right w3-opacity">{{ blog.created|date:"D j.n.Y G:i" }} </span>
+    
+                        <!-- {% if time.0 < 1 and time.1 < 1 and time.2 < 1 %}
+                            <span class="w3-right w3-opacity">{{time.3}} sec</span>
+                        {% elif time.0 < 1  and time.1 < 1%}
+                            <span class="w3-right w3-opacity"> {{ time.2 }}  min</span>
+                        {% elif time.0 < 1 %}
+                            <span class="w3-right w3-opacity"> {{ time.1 }} hour{{time.1|pluralize:"s"}}</span>
+                        {% else %}
+                            <span class="w3-right w3-opacity">{{ time.forloop.counter0.0 }} day{{time.0|pluralize:"s"}}</span>
+                            <p>{{ time }}</p>
+                        {% endif %}
+                        <p>{{ counter.time }}</p> -->
+    
+                        <hr>
+                    <div class="w3-row-padding" >
+                        <div >
+                            <img src="{{blog.image.url}}" style="width:100%" alt="Logo" class="w3-margin-bottom">
+                        </div>
+                    </div>
+                    <p>
+                        {% for tag in blog.tags.all %}
+                        <span class="w3-tag w3-small w3-theme">#{{tag}}</span>
+                        {% endfor %}
+                        
+                    </p>
+                    <h3 class="w3-center">{{blog.title}}</h3>
+                    <p>{{blog.description|slice:'250'}}...</p>
+                      
+                    <div class="w3-text-theme w3-right">
+                        <i class="fa fa-thumbs-up"></i>
+                        <span>{{ blog.vote_like  }} Like{{blog.vote_like|pluralize:"s"}} </span> 
+                        <i class="fa fa-thumbs-down"></i>
+                        <span>{{ blog.vote_dislike  }} Dislike{{blog.vote_dislike|pluralize:"s"}} </span> 
+                       
+                    </div>          
+                    <a href="{% url 'blog' blog.id %}" type="button" class="w3-button w3-theme w3-center w3-margin-bottom"><i class="fa fa-info"></i> Show more</a> 
+      
+    
+                    <br>
+
+                </div>
+            </div>
+            
+            
+            {% endfor %}
+
+             
+
+        </div>
+
+            
+       
+    </div>
+</div>
+<br>
+{% endblock %}
+
+

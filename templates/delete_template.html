@@ -1,0 +1,28 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+
+<!-- Main Section -->
+<div class="w3-container w3-white w3-card  w3-content w3-padding-24" style="max-width: 600px; margin-top: 80px;">
+
+
+            <form  action="" method="POST" >
+               
+                {% csrf_token %}
+                <p>Are you sure you want to delete {{object}} ?</p>
+            
+                <a class="w3-button w3-theme" href="{{request.GET.next}}">Go Back</a>
+
+
+                <input type="submit" class="w3-button w3-theme w3-margin-top" value="Submit"></input>
+
+            </form>
+</div>
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'main.html' %}
+
+
+
+{% block content %}
+
+<!-- <div class="w3-container w3-card w3-white w3-round w3-margin-bottom">
+
+
+</div> -->
+
+
+<!-- Header -->
+<div class="w3-container w3-text-theme " style="margin-top:80px">
+    <h1 class="w3-center">You have ({{unread}}) unread message{{unread|pluralize:"s"}} </h1>
+</div>
+
+<!-- Left Column -->
+<div class="w3-third">
+    <div class="w3-white w3-text w3-card-4">
+        <div class="w3-container">
+            <h2 class="w3-text-theme w3-center">Some greeting</h2>
+            <p class=" w3-center">Nice to meet you, welcome to us.</p>
+        </div>
+    </div><br>
+</div>
+
+
+<!-- Message List -->
+<div class="w3-container w3-card w3-white w3-margin" style="position: absolute;
+top:45%;
+left: 50%;
+transform: translate(-50%, -50%);">
+    <!-- Message 1 -->
+    {% for mess in objMessages %}
+    <a href="{% url 'message' mess.id %}" style="text-decoration: none;">
+        <div class="w3-container w3-margin w3-padding {% if mess.is_read == False %} w3-theme-l4  {% else %} w3-strong {% endif %}"
+        {% if mess.is_read == False %} style="  font-weight: bold;  " {% endif %}>
+            <p class="w3-right">{{mess.created|date:'d/m/Y H:i'}}</p>
+
+            <h3> From {{mess.name}}</h3>
+            <p >{{mess.text|slice:'120'}}...</p>
+        </div>
+    </a>
+    
+    {% endfor %}
+
+    
+
+
+    
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<!-- Header -->
+<div class="w3-container w3-text-theme w3-padding" style="margin-top:90px">
+    <h1 class="w3-center">Messssaaaaageee</h1>
+</div>
+
+<!-- Current Message -->
+<div  style="position: absolute;
+top:40%;
+left: 50%;
+transform: translate(-50%, -50%);">
+    
+    <div class="w3-container w3-card w3-white w3-margin-left   " style="width: 900px;">
+        <div class="w3-container w3-padding">
+            <p class="w3-right">{{mess.created|date:'d/m/Y H:i'}}</p>
+
+            {% if mess.sender %}
+            <p>From: <a style="text-decoration: none;font-weight: bold;" href="{% url 'user' mess.sender.id %}">{{mess.name}}</a></p> 
+            {% else %}
+            <p>From: {{mess.name}}</p> 
+            {% endif %}
+            <p>To: <a style="text-decoration: none;font-weight: bold;" href="{% url 'user' mess.recipient.id %}">{{mess.recipient.name}}</a></p> 
+            <p >Subject: {{mess.subject}}</p>
+            <hr>
+            <p>{{mess.text|linebreaksbr }}   </p>
+        </div>
+    </div>
+    <div class="w3-container w3-center ">
+        {% if request.GET.next %}
+        <a href="{{request.GET.next}}" class="w3-button w3-theme-d1">Back to Inbox</a>
+        {% else %}
+        <a href="{% url 'input' %}" class="w3-button w3-theme-d1">Back to Inbox</a>
+        {% endif %}
+
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<!-- Page Container -->
+<div class="w3-container  w3-content " style="max-width: 1100px; margin-top: 80px">
+    <!-- The Grid -->
+        
+        <!-- Searching -->
+        <div class="w3-row-padding w3-margin">
+            
+            <div class="w3-card  w3-white w3-padding">
+                <form  id="searchForm" class="form" action="{% url 'users' %}" method="get">
+                    <div class="w3-margin">
+                      <h2  for="formInput#search">Search Authors </h2>
+                      <input class="w3-input w3-card w3-theme-l5" id="formInput#search" type="text" name="some_query"
+                        placeholder="Search by Author" value="{{some_query}}" />
+                    </div>
+        
+                    <input class="w3-button w3-theme-d1 w3-margin-bottom" type="submit" value="Search" />
+                    <!-- <button type="submit"  class=" w3-button w3-theme-d1 w3-margin-bottom">Comment</button> -->
+
+                  </form>
+            </div>
+        
+        </div>
+
+
+        <h2 class="w3-center w3-text-theme"> Authors</h2>
+        <!-- Middle Column -->
+        <div class="w3-col m12">
+
+
+            <div class="w3-row-padding ">
+
+                {% for author in authors %}
+                <div class="w3-col  m4">
+                    <div class=" w3-card w3-white w3-margin w3-padding w3-center">
+                        <h4>{{author.name}}</h4>
+                        <img src="{{author.image.url}}" alt="author avatar" style="max-width: 250px; max-height: 250px;  
+                            border-radius: 40px; ">
+
+                        <p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-theme"></i>{{author.location}}</p>
+                        <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> {{author.intro|slice:"20"}}</p>
+                        {% if author.id != request.user.author.id %}
+                            <a href="{% url 'create-message' author.id %}" class="w3-button w3-theme w3-margin"><i class="fa fa-envelope"></i> Send Message</a>
+                        {% else %}
+                            <a class="w3-button w3-gray w3-hover-gray w3-margin"><i class="fa fa-envelope"></i> Send Message</a>
+                        {% endif %}
+                        
+                        <a href="{% url 'user' author.id %}">
+                            <button  class="w3-button w3-theme w3-margin"><i class="fa fa-info"></i>  About </button>
+                        </a>
+                    </div>
+                </div>
+
+                {% endfor %}
+
+            </div>
+            
+        </div>
+
+
+        {% include 'pagination.html' with my_list=authors paginator=paginator %}
+   
+</div>
+
+
+
+{% endblock %}

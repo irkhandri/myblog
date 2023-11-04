@@ -1,0 +1,178 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
+
+    <!-- The Grid -->
+    <div class="w3-row-padding" >
+    
+      <!-- Left Column -->
+      <div class="w3-third" style="max-width:300px">
+      
+        <div class="w3-white w3-text w3-card-4">
+          
+          <div class="w3-container">
+            <h2 class="w3-text-theme w3-center">About Blog</h2>
+            <p><i class="fa fa-info fa-fw w3-margin-right w3-text-theme"></i>{{blog.title}}</p>
+            <p><i class="fa fa-calendar fa-fw w3-margin-right w3-text-theme"></i>{{blog.created}}</p>
+  
+  
+            <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-theme"></i>{{blog.owner.email}}</p>
+            <p><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-theme"></i>{{blog.owner.mobil}}</p>
+            <p></p><i class="fa fa-user fa-fw w3-margin-right w3-large w3-text-theme"></i>Author: <a href="{% url 'user' blog.owner.id %}"> {{blog.owner.name}}</a> </p>
+  
+           
+          </div>
+  
+        </div><br>
+  
+      <!-- End Left Column -->
+      </div>
+  
+      <!-- Right Column -->
+      <div class="w3-twothird">
+      
+        <div class="w3-container w3-card w3-white w3-margin-bottom">
+          <h2 class="w3-text-theme w3-padding-16"><i class="fa fa-suitcase fa-fw w3-margin-right w3-xxlarge w3-text-theme"></i>{{blog.title}}</h2>
+          
+  
+          <div ><br>
+
+            
+
+
+                    {% if time.0 < 1 and time.1 < 1 and time.2 < 1 %}
+                        <span class="w3-right w3-opacity">{{time.3}} sec</span>
+                    {% elif time.0 < 1  and time.1 < 1%}
+                        <span class="w3-right w3-opacity"> {{ time.2 }}  min</span>
+                    {% elif time.0 < 1 %}
+                        <span class="w3-right w3-opacity"> {{ time.1 }} hour{{time.1|pluralize:"s"}}</span>
+                    {% else %}
+                        <span class="w3-right w3-opacity">{{time.0}} day{{time.0|pluralize:"s"}}</span>
+                    {% endif %}
+                    <hr>
+                    <img src="{{ blog.image.url }}" style="width:100%" alt="Nature">
+
+                  <p>
+                      {% for tag in blog.tags.all %}
+                      <span class="w3-tag w3-small w3-theme">#{{tag}}</span>
+                      {% endfor %}
+                      
+                  </p>
+
+                  <hr class="w3-clear">
+                  <p class="w3-padding">
+                    {{blog.description|linebreaksbr}}
+                  </p>
+
+                  <div class="w3-text-theme w3-right">
+                    <i class="fa fa-thumbs-up"></i>
+                    <span>{{ blog.vote_like  }} Like{{blog.vote_like|pluralize:"s"}} </span> 
+                    <i class="fa fa-thumbs-down"></i>
+                    <span>{{ blog.vote_dislike  }} Dislike{{blog.vote_dislike|pluralize:"s"}} </span> 
+                   
+                  </div> 
+                  <br> 
+                  
+
+                  
+                  {% if request.user.author.id  in blog.commentators %}
+                    <h3>You can comment only once</h3>
+                  {% elif request.user.author.id != blog.owner.id and request.user.is_authenticated  %}
+                  <hr> 
+                  <form method="post" action="{% url 'blog' blog.id %}">
+                    {% csrf_token %}
+
+                    <!-- Like and Dislike buttons -->
+                    <div>
+                      <button type="button" class="like-button w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i> Like</button>
+                      <button type="button" class="dislike-button w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-down"></i> Dislike</button>
+                  </div>
+
+                    <div>
+                        <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+                        {{ form.description }}
+                    </div>
+                    
+                    <br>
+                    
+                    <!-- Hidden input field for form.react -->
+                    <input type="hidden" name="{{ form.react.name }}" id="react-input" value="">
+                    
+                    <!-- Submit button -->
+                    <button type="submit"  class=" w3-button w3-theme-d1 w3-margin-bottom">Comment</button>
+                </form>
+                {% elif not request.user.is_authenticated %}
+                <h3> You can not comment, you must log in</h3>
+                <a href="{% url 'login' %}?next={{request.path}}" class="w3-button w3-theme  "><i class="fa fa"></i> Log In</a>
+
+                {% else %}
+                  <h3> You can not comment your own blogs</h3>
+                {% endif %}
+
+                
+                <h3 class="w3-text-theme">Comments</h3>
+                <hr>
+                  {% for comment in blog.comment_set.all %}
+                  
+
+                  <div class="w3-container w3-margin">
+                      <div class="w3-row-padding w3-padding-16">
+                          <div class="w3-col m2">
+                              <img src="{{comment.owner.image.url}}" alt="Avatar" class="w3-circle" style="width:100px">
+                          </div>
+                          <div class="w3-col m10">
+                              <p class="w3-right ">{{comment.created|date:"d/m/Y"}}</p>
+                      
+                              <a href="{% url 'user' comment.owner.id %}" ><h4>{{comment.owner.name}}</h4></a>
+                              <p class="w3-right w3-opacity w3-text-theme">I {{comment.react}} it .</p>
+                              <p>{{comment.description}}</p>
+                              
+                          </div>
+                      </div>
+                  </div>
+                  {% endfor %}
+  
+          </div>
+  
+      
+        
+  
+        </div>
+  
+        
+  
+      <!-- End Right Column -->
+      </div>
+      
+    <!-- End Grid -->
+    </div>
+    
+    <!-- End Page Container -->
+  </div>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get the like and dislike buttons
+        const likeButton = document.querySelector(".like-button");
+        const dislikeButton = document.querySelector(".dislike-button");
+        
+        // Get the hidden input field
+        const reactInput = document.querySelector("#react-input");
+        
+        // Add event listeners for button clicks
+        likeButton.addEventListener("click", function() {
+            // Set the hidden input value to "like" when the "Like" button is clicked
+            reactInput.value = "like";
+        });
+        
+        dislikeButton.addEventListener("click", function() {
+            // Set the hidden input value to "dislike" when the "Dislike" button is clicked
+            reactInput.value = "dislike";
+        });
+    });
+  </script>
+
+
+{% endblock %}

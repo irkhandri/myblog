@@ -1,0 +1,17 @@
+# version:
+
+services:
+  
+  django:
+    container_name: django
+    build:
+      context: ./
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./:/usr/src/app 
+    ports:
+      - 8001:8000
+    environment:
+    - DEBUG=1
+    - SECRET_KEY=68u6u6876u6i87i7jyu78
+    - ALLOWED_HOSTS=localhost,127.0.0.1

@@ -1,0 +1,106 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="w3-container w3-content" style="max-width: 1400px; margin-top: 80px;">
+
+    <div class="w3-row-padding">
+        <!-- Left Column -->
+        <div class="w3-third">
+            <div class="w3-white w3-text w3-card-4">
+                <div class="w3-container">
+                    <h2 class="w3-text-theme w3-center">Some greeting</h2>
+                    <p class=" w3-center">Nice to meet you, welcome to us.</p>
+                </div>
+            </div><br>
+        </div>
+        <!-- End Left Column -->
+
+        <!-- Right Column -->
+        <div class="w3-twothird">
+            <div class="w3-container w3-card w3-white w3-margin-bottom">
+
+                {% if page == 'register' %}
+
+
+                <h2 class="w3-text-theme w3-padding-16">
+                    <i class="fa fa-user-plus fa-fw w3-margin-right w3-xxlarge w3-text-theme"></i>Sign Up
+                </h2>
+                <!-- Signup Form -->
+                <h3  class="w3-text-theme">Register an account</h3>
+
+                <div class="w3-container" >
+                <form method="post" action="{% url 'register' %}">
+
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="w3-padding">
+
+                        <label>{{field.label}}</label>
+                        {{field}}
+
+                        {% for error in field.errors %}
+                            <p style="color: red;">{{error}}</p>
+                        {% endfor %}
+                    </div>
+                    <br>
+                    {% endfor %}
+
+                    <input type="submit" class="w3-button w3-theme w3-margin-top" value="Sign In"></input>
+
+                </form>
+                </div>
+
+                <div class="w3-center">
+                    <p>Already have an Account?</p>
+                    <a class="w3-button w3-theme" href="{% url 'login' %}">Log In</a>
+                  </div>
+
+
+                {% else %}
+
+
+                <h2 class="w3-text-theme w3-padding-16">
+                    <i class="fa fa-sign-in fa-fw w3-margin-right w3-xxlarge w3-text-theme"></i>Log In
+                </h2>
+                <!-- Login Form -->
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <!-- Input:Username -->
+                    <div class="w3-padding">
+                      <label for="formInput#text">Username: </label>
+                      <input
+                        id="formInput#text"
+                        type="text"
+                        name="username"
+                        placeholder="Enter your username..."
+                      />
+                    </div>
+            
+                    <!-- Input:Password -->
+                    <div class="w3-padding">
+                      <label for="formInput#password">Password: </label>
+                      <input
+                        id="formInput#passowrd"
+                        type="password"
+                        name="password"
+                        placeholder="••••••••"
+                      />
+                    </div>
+                    <div >
+                      <input type="submit" class="w3-button w3-theme w3-margin-top" value="Log In"></input>
+                        <br>
+                      <a href="" class="w3-text-theme w3-right" >Forget Password?</a>
+                    </div>
+                  </form>
+                <!-- End Login Form -->
+                <div class="w3-center">
+                    <p>Dont have an Account?</p>
+                    <a class="w3-button w3-theme" href="{% url 'register' %}">Sign Up</a>
+                  </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

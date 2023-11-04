@@ -1,0 +1,225 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
+    <div class="w3-row">
+        <div class="w3-col m4">
+            <!-- Profile -->
+            <div class="w3-card w3-round w3-white">
+
+                <div class="w3-container w3-center">
+                    
+                    <p class="w3-center"><img src="{{account.image.url}}" class="w3-circle" style="max-width: 400px; max-height: 550px;  
+                        border-radius: 40px; " alt="Avatar"></p>
+                    <h3 >{{account.name}}</h3>
+                    <hr>
+
+                    {% if account.intro %}
+                    <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> {{account.intro}}</p>
+                    {% endif %}
+
+                    <p><i class="fa fa-at fa-fw w3-margin-right w3-text-theme"></i> qwer@mail.com</p>
+
+                    {% if account.location %}
+                    <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> {{account.location}}</p>
+                    {% endif %}
+
+                    {% if account.mobil %}
+                    <p><i class="fa  fa-mobile  w3-margin-right w3-text-theme"></i> {{account.mobil}}</p>
+                    {% endif %}
+
+                    <p><i class="fa fa-calendar fa-fw w3-margin-right w3-text-theme"></i> Here from {{account.created.date}}</p>
+
+
+                    {% if account.soc_facebook %}
+                    <a href="{{account.soc_facebook}}"><i class="fa  fa-facebook  w3-text-theme w3-xxlarge "></i></a>
+                    {% endif %}
+
+                    {% if account.soc_x %}
+                    <a href="{{account.soc_x}}"><i class="fa  fa-twitter w3-text-theme w3-xxlarge "></i></a>
+                    {% endif %}
+
+                    {% if account.soc_youtube %}
+                    <a href="{{account.soc_youtube}}"><i class="fa  fa-youtube w3-text-theme w3-xxlarge ">    </i></a>
+                    {% endif %}
+
+                    {% if account.soc_linkedin %}
+                    <a href="{{account.soc_linkedin}}"><i class="fa  fa-linkedin w3-text-theme w3-xxlarge ">   </i></a>
+                    {% endif %}
+
+                    {% if account.soc_telegram %}
+                    <a href="{{account.soc_telegram}}"><i class="fa  fa-telegram w3-text-theme w3-xxlarge ">   </i></a>
+                    {% endif %}
+
+                    <br> 
+
+                    <a href="{% url 'edit-author' account.id %}" class="w3-button w3-theme w3-right w3-right"><i class="fa fa-edit"></i> Edit Profile</a>
+
+                </div>
+                
+            </div>
+            <br>
+
+            <div class="w3-card w3-round w3-white   ">
+                <div class="w3-container ">
+
+                    <h2>About me</h2>
+                    
+                    <p> {{account.bio}}</p>
+                </div>
+            </div>
+            <br>
+
+            <!-- Interests -->
+            <div class="w3-card w3-round w3-white  ">
+                <div class="w3-container ">
+                    <h2 >Interests</h2>
+
+                    {% for interest in interests %}
+                        <a href="{% url 'edit-interest' interest.id %}" class="w3-button w3-theme w3-right w3-right"><i class="fa fa-edit"></i> Edit</a>
+                        <a href="{% url 'delete-interest' interest.id %}?next=/users/account/"   class="w3-button w3-theme w3-right " style="margin-right: 10px;"><i class="fa fa-eraser"></i> Delete</a>
+                        <p class=" w3-tag  w3-text-blue  w3-theme ">{{interest.name}}</p> 
+                        <p> {{interest.description}}</p>
+                    {% endfor %}
+                   
+                    <a class="w3-button w3-theme w3-right" href="{% url 'create-interest' %}"><i class="fa fa-plus"></i>Add Interest</a>
+
+                </div>
+            </div>
+            <br>
+
+            <!-- Alert Box -->
+
+            <!-- <div class="w3-container w3-display-container w3-round w3-theme-l4 w3-border w3-theme-border w3-margin-bottom w3-hide-small">
+                <span onclick="this.parentElement.style.display='none'" class="w3-button w3-theme-l3 w3-display-topright">
+                    <i class="fa fa-remove"></i>
+                </span>
+                <p><strong>Hey!</strong></p>
+                <p>People are looking at your profile. Find out who.</p>
+            </div> -->
+        </div>
+
+        <!-- Middle Column -->
+        <div class="w3-col  w3-round w3-margin m7">
+
+
+            <!-- Searching -->
+        <!-- <div class="w3-row-padding w3-margin">
+            
+            <div class="w3-card  w3-white w3-padding">
+                <form  id="searchForm" class="form" action="{% url 'account' %}" method="get">
+                    <div class="w3-margin">
+                      <h2  for="formInput#search">Search Blogs </h2>
+                      <input class="w3-input w3-card w3-theme-l5" id="formInput#search" type="text" name="some_query"
+                        placeholder="Search by Title" value="{{some_query}}" />
+                    </div>
+                    <input class="w3-button w3-theme-d1 w3-margin-bottom" type="submit" value="Search" />
+                  </form>
+            </div>
+        
+        </div> -->
+
+
+            <h2 class="w3-text-theme w3-margin-top w3-center"> My Blog</h2>
+            <a class="w3-button w3-margin-bottom w3-margin-right w3-theme w3-right" href="{% url 'create-blog' %}"><i class="fa fa-plus"></i>Add Blog</a>
+            <br>
+
+            
+            {% for blog in blogs %}
+
+
+            <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+                <a href="{% url 'update-blog' blog.id %}" class="w3-button w3-theme "><i class="fa fa-edit"></i> Edit</a>
+                <a href="{% url 'delete-blog' blog.id %}?next=/users/account/"   class="w3-button w3-theme  " style="margin-right: 10px;"><i class="fa fa-eraser"></i> Delete</a>
+
+                <span class="w3-right w3-opacity">{{ blog.created|date:"D j.n.Y G:i" }} </span>
+
+                    <!-- {% if time.0 < 1 and time.1 < 1 and time.2 < 1 %}
+                        <span class="w3-right w3-opacity">{{time.3}} sec</span>
+                    {% elif time.0 < 1  and time.1 < 1%}
+                        <span class="w3-right w3-opacity"> {{ time.2 }}  min</span>
+                    {% elif time.0 < 1 %}
+                        <span class="w3-right w3-opacity"> {{ time.1 }} hour{{time.1|pluralize:"s"}}</span>
+                    {% else %}
+                        <span class="w3-right w3-opacity">{{ time.forloop.counter0.0 }} day{{time.0|pluralize:"s"}}</span>
+                        <p>{{ time }}</p>
+                    {% endif %}
+                    <p>{{ counter.time }}</p> -->
+
+                    <hr>
+                <div class="w3-row-padding" >
+                    <div >
+                        <img src="{{blog.image.url}}" style="width:100%" alt="Logo" class="w3-margin-bottom">
+                    </div>
+                </div>
+                <p>
+                    {% for tag in blog.tags.all %}
+                    <span class="w3-tag w3-small w3-theme">#{{tag}}</span>
+                    {% endfor %}
+                    
+                </p>
+                <h3 class="w3-center">{{blog.title}}</h3>
+                <p>{{blog.description|slice:'250'}}...</p>
+                  
+                <div class="w3-text-theme w3-right">
+                    <i class="fa fa-thumbs-up"></i>
+                    <span>{{ blog.vote_like  }} Like{{blog.vote_like|pluralize:"s"}} </span> 
+                    <i class="fa fa-thumbs-down"></i>
+                    <span>{{ blog.vote_dislike  }} Dislike{{blog.vote_dislike|pluralize:"s"}} </span> 
+                   
+                </div>                
+
+                <br>
+                <a href="{% url 'blog' blog.id %}" type="button" class="w3-button w3-theme w3-center w3-margin-bottom"><i class="fa fa-info"></i> Show more</a> 
+
+            </div>
+            {% endfor %}
+            
+
+        </div>
+
+        <!-- Right Column -->
+        <!-- <div class="w3-col m2">
+            <div class="w3-card w3-round w3-white w3-center">
+                <div class="w3-container">
+                    <p>Upcoming Events:</p>
+                    <img src="img/forest.jpeg" alt="Forest" style="width:100%;">
+                    <p><strong>Holiday</strong></p>
+                    <p>Friday 15:00</p>
+                    <p><button class="w3-button w3-block w3-theme-l4">Info</button></p>
+                </div>
+            </div>
+            <br>
+
+            <div class="w3-card w3-round w3-white w3-center">
+                <div class="w3-container">
+                    <p>Friend Request</p>
+                    <img src="img/bird.jpeg" alt="Avatar" style="width:50%"><br>
+                    <span>Jane Doe</span>
+                    <div class="w3-row w3-opacity">
+                        <div class="w3-half">
+                            <button class="w3-button w3-block w3-green w3-section" title="Accept"><i class="fa fa-check"></i></button>
+                        </div>
+                        <div class="w3-half">
+                            <button class="w3-button w3-block w3-red w3-section" title="Decline"><i class="fa fa-remove"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+             <div class="w3-card w3-round w3-white w3-padding-16 w3-center">
+                <p>ADS</p>
+            </div> 
+             <br>
+
+            <div class="w3-card w3-round w3-white w3-padding-32 w3-center">
+                <p><i class="fa fa-bug w3-xxlarge"></i></p>
+            </div> 
+        </div> -->
+    </div>
+</div>
+
+
+{% endblock %}

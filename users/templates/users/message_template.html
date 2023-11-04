@@ -1,0 +1,44 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+
+<div class="w3-container w3-white w3-card  w3-content w3-padding-24" style="max-width: 600px; margin-top: 80px;">
+    <h2  class="w3-text-theme w3-center"> Create new message</h2>
+
+            <div class="w3-container" >
+                <form class="form" method="POST">
+                    {% csrf_token %}
+                    {% if request.user.is_authenticated == False %}
+                    <div class="w3-container">
+                        <label for="formInput#text">{{form.name.label}}</label>
+                       {{form.name}}
+                    </div>
+                    <br>
+                    <div class="w3-container">
+                        <label for="formInput#text">{{form.email.label}} </label>
+                        {{form.email}}
+                        
+                    </div>
+                    <br>
+                    {% endif %}
+
+                    <div class="w3-container"  >
+                        <label  for="formInput#text">{{ form.subject.label }}</label>
+                        {{ form.subject }}
+                    </div>
+                    <br>
+                    <div class="w3-container ">
+                        <!-- <label   for="formInput#text">{{form.text.label}} </label> -->
+                        {{form.text}}
+                    </div>
+                    <br>
+                   <div class="w3-center">
+                        <input class="w3-button w3-theme-d1 w3-margin-bottom " type="submit" value="Send" />
+                   </div>
+                </form>
+            </div>
+</div>
+
+
+{% endblock %}

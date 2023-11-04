@@ -1,0 +1,33 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+    <div class="w3-container w3-white w3-card  w3-content w3-padding-24" style="max-width: 600px; margin-top: 80px;">
+        <h2  class="w3-text-theme w3-center">{{todo}} your {{object}}</h2>
+
+                <div class="w3-container" >
+                <form method="post" enctype="multipart/form-data" >
+
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="w3-padding ">
+
+                        <label for="formInput#text">{{field.label}}</label>
+                        <br>
+                        {{field}}
+
+                        {% for error in field.errors %}
+                            <p style="color: red;">{{error}}</p>
+                        {% endfor %}
+                    </div>
+                    <br>
+                    {% endfor %}
+
+                    <input type="submit" class="w3-button w3-theme w3-margin-top w3-center " value="Submit"></input>
+
+                </form>
+                </div>
+    </div>
+
+
+{% endblock %}
