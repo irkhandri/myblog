@@ -1,0 +1,10 @@
+.alert--success {
+  background-color: #4CAF50; /* Green background */
+  color: white; /* White text */
+}
+
+.alert--error {
+  background-color: #f44336; /* Red background */
+  color: blue;
+  color: white; /* White text */
+}
