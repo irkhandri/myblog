@@ -23,8 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-srel-^f&0cpc0#1#wnvr*v3pwhj_&r7tg1rbju)w$-cqm3$5c5'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+# DEBUG = True
+DEBUG = False
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', "irkha-blog-7e24115d464f.herokuapp.com"]
 
 # SECRET_KEY = os.environ.get("SECRET_KEY")
 # DEBUG = os.environ. get("DEBUG")
