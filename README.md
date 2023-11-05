@@ -27,7 +27,7 @@ Before you get started, make sure you have the following installed:
 1. Clone the repository:
 
    
-   git clone https://github.com/yourusername/django-blog-project.git
+   git clone https://github.com/irkhandri/myblog.git
    cd django-blog-project
 
 2. Create a virtual environment and activate:
