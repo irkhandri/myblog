@@ -24,8 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-srel-^f&0cpc0#1#wnvr*v3pwhj_&r7tg1rbju)w$-cqm3$5c5'
 # SECURITY WARNING: don't run with debug turned on in production!
 
-# DEBUG = True
-DEBUG = False
+DEBUG = True
+# DEBUG = False
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', "irkha-blog-7e24115d464f.herokuapp.com"]
 
 # SECRET_KEY = os.environ.get("SECRET_KEY")
@@ -216,21 +216,16 @@ EMAIL_HOST_PASSWORD = 'ForMyBlog1991'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-
 STATIC_URL = '/static/'
 MEDIA_URL = '/images/'
-
+#  !!!! for all static
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-
 
 
 
