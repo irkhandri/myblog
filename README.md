@@ -43,6 +43,18 @@ Before you get started, make sure you have the following installed:
 6. Start the development server:
    python manage.py runserver
 
+### Running the Docker Container
+
+Build and run the Docker container on port 8001:
+   docker-compose up -d --build
+
+### Accessing the Application
+Once the Docker container is running, you can access the application in your web browser:
+
+Open http://localhost:8001 in your browser.
+
+### Stopping the Docker Container
+   docker-compose down
 
 ## Usage
 
